@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerGym | Clases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">Power<span>Gym</span></div>
+    <nav>
+      <ul>
+        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="clases.html">Clases</a></li>
+        <li><a href="monitores.html">Monitores</a></li>
+        <li><a href="programas.html">Programas</a></li>
+        <li><a href="imc.html">Calculadora IMC</a></li>
+        <li><a href="entrenador-ia.html">Entrenador IA</a></li>
+        <li><a href="peticiones.html">Peticiones</a></li>
+        <li><a href="instalaciones.html">Instalaciones</a></li>
+        <li id="nav-admin-link" class="hidden"><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+    <div class="user-area" id="nav-user-area"></div>
+  </div>
+</header>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="eyebrow">Elige tu ritmo</span>
+    <h2>Nuestras clases</h2>
+    <p>Toca una clase en el calendario para reservar tu plaza. Puedes ver y cancelar tus reservas desde tu área personal.</p>
+  </div>
+  <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:20px; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--color-steel);">
+    <span class="plate-chip" style="margin:0;"><span class="dot red"></span>Alta intensidad</span>
+    <span class="plate-chip" style="margin:0;"><span class="dot blue"></span>Media-alta</span>
+    <span class="plate-chip" style="margin:0;"><span class="dot yellow"></span>Media</span>
+    <span class="plate-chip" style="margin:0;"><span class="dot green"></span>Suave</span>
+  </div>
+  <div id="classes-list"></div>
+</section>
+
+<footer>
+  <div class="bar-divider">
+    <span class="plate red"></span><span class="plate blue"></span><span class="plate yellow"></span><span class="plate green"></span>
+  </div>
+  <div class="footer-brand">PowerGym</div>
+  <p class="copy">© 2026 POWERGYM — PROYECTO DE PRÁCTICA / PORTFOLIO</p>
+</footer>
+<script src="js/auth.js"></script>
+<script src="js/timeslots.js"></script>
+<script src="js/classes.js"></script>
+</body>
+</html>

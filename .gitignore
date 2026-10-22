@@ -1,0 +1,9 @@
+node_modules/
+.env
+backend/db/gym.db
+backend/db/gym.db-shm
+backend/db/gym.db-wal
+
+# Copias que deja Claude al hacer cambios (no hace falta subirlas)
+copia-antes-de-cambios-*.zip
+.claude/

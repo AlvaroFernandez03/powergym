@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerGym | Peticiones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">Power<span>Gym</span></div>
+    <nav>
+      <ul>
+        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="clases.html">Clases</a></li>
+        <li><a href="monitores.html">Monitores</a></li>
+        <li><a href="programas.html">Programas</a></li>
+        <li><a href="imc.html">Calculadora IMC</a></li>
+        <li><a href="entrenador-ia.html">Entrenador IA</a></li>
+        <li><a href="peticiones.html">Peticiones</a></li>
+        <li><a href="instalaciones.html">Instalaciones</a></li>
+        <li id="nav-admin-link" class="hidden"><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+    <div class="user-area" id="nav-user-area"></div>
+  </div>
+</header>
+
+<section class="container" style="padding-top:30px; max-width:700px;">
+  <h2>Peticiones y sugerencias</h2>
+  <p style="margin:10px 0 20px; color:#555;">Comparte ideas o peticiones para el gimnasio. Todas las personas registradas pueden verlas.</p>
+
+  <p id="not-logged" class="hidden">Debes <a href="login.html" style="color:var(--color-primary);">iniciar sesión</a> para ver y enviar peticiones.</p>
+
+  <div id="request-form-section" class="hidden" style="margin-bottom:30px;">
+    <form id="request-form">
+      <div class="field">
+        <label for="request-message">Tu petición</label>
+        <textarea id="request-message" rows="3" required style="padding:10px; border:1px solid #ccc; border-radius:8px; font-family:inherit; font-size:1rem;" placeholder="Ej: ¿Podríais añadir clases de spinning los sábados?"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar petición</button>
+      <p id="request-form-msg" class="form-message"></p>
+    </form>
+  </div>
+
+  <div id="requests-list"></div>
+</section>
+
+<footer>
+  <div class="bar-divider">
+    <span class="plate red"></span><span class="plate blue"></span><span class="plate yellow"></span><span class="plate green"></span>
+  </div>
+  <div class="footer-brand">PowerGym</div>
+  <p class="copy">© 2026 POWERGYM — PROYECTO DE PRÁCTICA / PORTFOLIO</p>
+</footer>
+<script src="js/auth.js"></script>
+<script src="js/peticiones.js"></script>
+</body>
+</html>

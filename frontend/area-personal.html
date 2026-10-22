@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerGym | Mi área personal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">Power<span>Gym</span></div>
+    <nav>
+      <ul>
+        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="clases.html">Clases</a></li>
+        <li><a href="monitores.html">Monitores</a></li>
+        <li><a href="programas.html">Programas</a></li>
+        <li><a href="imc.html">Calculadora IMC</a></li>
+        <li><a href="entrenador-ia.html">Entrenador IA</a></li>
+        <li><a href="peticiones.html">Peticiones</a></li>
+        <li><a href="instalaciones.html">Instalaciones</a></li>
+        <li id="nav-admin-link" class="hidden"><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+    <div class="user-area" id="nav-user-area"></div>
+  </div>
+</header>
+
+<section class="form-box" style="max-width:520px;">
+  <h2>Mi área personal</h2>
+  <p id="not-logged" class="hidden">Debes <a href="login.html" style="color:var(--color-primary);">iniciar sesión</a> para ver esta página.</p>
+
+  <form id="profile-form" class="hidden">
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" id="p-name" disabled>
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="text" id="p-email" disabled>
+    </div>
+    <div class="field">
+      <label for="p-age">Edad</label>
+      <input type="number" id="p-age">
+    </div>
+    <div class="field">
+      <label for="p-height">Altura (cm)</label>
+      <input type="number" id="p-height" step="0.1">
+    </div>
+    <div class="field">
+      <label for="p-weight">Peso (kg)</label>
+      <input type="number" id="p-weight" step="0.1">
+    </div>
+    <div class="field">
+      <label for="p-goal">Objetivo</label>
+      <select id="p-goal">
+        <option value="">Selecciona uno</option>
+        <option value="perder_peso">Perder peso</option>
+        <option value="ganar_musculo">Ganar músculo</option>
+        <option value="tonificar">Tonificar</option>
+        <option value="rendimiento">Rendimiento deportivo</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <p id="form-msg" class="form-message"></p>
+  </form>
+</section>
+
+<section class="container" id="bookings-section" style="max-width:600px; margin: 0 auto 60px;">
+  <h2 style="margin-bottom:16px;">Mis reservas de clases</h2>
+  <div id="bookings-list"></div>
+</section>
+
+<footer>
+  <div class="bar-divider">
+    <span class="plate red"></span><span class="plate blue"></span><span class="plate yellow"></span><span class="plate green"></span>
+  </div>
+  <div class="footer-brand">PowerGym</div>
+  <p class="copy">© 2026 POWERGYM — PROYECTO DE PRÁCTICA / PORTFOLIO</p>
+</footer>
+<script src="js/auth.js"></script>
+<script>
+(async () => {
+  const token = getToken();
+  if (!token) {
+    document.getElementById("not-logged").classList.remove("hidden");
+    return;
+  }
+
+  try {
+    const user = await apiFetch("/users/me");
+    document.getElementById("profile-form").classList.remove("hidden");
+    document.getElementById("p-name").value = user.name;
+    document.getElementById("p-email").value = user.email;
+    document.getElementById("p-age").value = user.age ?? "";
+    document.getElementById("p-height").value = user.height_cm ?? "";
+    document.getElementById("p-weight").value = user.weight_kg ?? "";
+    document.getElementById("p-goal").value = user.goal ?? "";
+  } catch (err) {
+    document.getElementById("not-logged").classList.remove("hidden");
+    document.getElementById("not-logged").textContent = err.message;
+    document.getElementById("bookings-section").classList.add("hidden");
+    return;
+  }
+
+  await loadMyBookings();
+})();
+
+async function loadMyBookings() {
+  const list = document.getElementById("bookings-list");
+  list.innerHTML = "<p>Cargando reservas...</p>";
+
+  try {
+    const bookings = await apiFetch("/bookings/me");
+    if (bookings.length === 0) {
+      list.innerHTML = `<p>No tienes ninguna reserva todavía. <a href="clases.html" style="color:var(--color-primary);">Ver clases disponibles</a></p>`;
+      return;
+    }
+
+    list.innerHTML = "";
+    bookings.forEach((b) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.marginBottom = "12px";
+      card.innerHTML = `
+        <h3>${b.class_name}</h3>
+        <p>${b.day_of_week} — ${b.time_label}</p>
+        <p>Monitor: ${b.monitor_name || "Por confirmar"}</p>
+        <button class="btn btn-outline" data-booking-id="${b.booking_id}" style="margin-top:8px;">Cancelar reserva</button>
+      `;
+      list.appendChild(card);
+    });
+
+    list.querySelectorAll("button[data-booking-id]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.textContent = "Cancelando...";
+        try {
+          await apiFetch(`/bookings/${btn.dataset.bookingId}`, { method: "DELETE" });
+          await loadMyBookings();
+        } catch (err) {
+          alert(err.message);
+          btn.disabled = false;
+          btn.textContent = "Cancelar reserva";
+        }
+      });
+    });
+  } catch (err) {
+    list.innerHTML = `<p class="form-message error">${err.message}</p>`;
+  }
+}
+
+document.getElementById("profile-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("form-msg");
+  msg.textContent = "";
+  msg.className = "form-message";
+
+  try {
+    await apiFetch("/users/me", {
+      method: "PUT",
+      body: JSON.stringify({
+        age: document.getElementById("p-age").value || null,
+        height_cm: document.getElementById("p-height").value || null,
+        weight_kg: document.getElementById("p-weight").value || null,
+        goal: document.getElementById("p-goal").value || null,
+      }),
+    });
+    msg.textContent = "Perfil actualizado correctamente.";
+    msg.classList.add("success");
+  } catch (err) {
+    msg.textContent = err.message;
+    msg.classList.add("error");
+  }
+});
+</script>
+</body>
+</html>

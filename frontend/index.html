@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerGym | Bienvenido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-brand">Power<span>Gym</span></div>
+
+  <div class="gate-doors">
+    <div class="gate-door left"></div>
+    <div class="gate-door right"></div>
+  </div>
+  <div class="gate-glow"></div>
+
+  <div class="gate-panel">
+    <div class="gate-tabs">
+      <button type="button" id="tab-login" class="gate-tab active">Iniciar sesión</button>
+      <button type="button" id="tab-register" class="gate-tab">Registrarse</button>
+    </div>
+
+    <form id="gate-login-form">
+      <div class="field">
+        <label for="gate-login-email">Email</label>
+        <input type="email" id="gate-login-email" required>
+      </div>
+      <div class="field">
+        <label for="gate-login-password">Contraseña</label>
+        <input type="password" id="gate-login-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Abrir puertas</button>
+      <p id="gate-login-msg" class="form-message"></p>
+    </form>
+
+    <form id="gate-register-form" class="hidden">
+      <div class="field">
+        <label for="gate-register-name">Nombre</label>
+        <input type="text" id="gate-register-name" required>
+      </div>
+      <div class="field">
+        <label for="gate-register-email">Email</label>
+        <input type="email" id="gate-register-email" required>
+      </div>
+      <div class="field">
+        <label for="gate-register-password">Contraseña (mín. 6 caracteres)</label>
+        <input type="password" id="gate-register-password" minlength="6" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Crear cuenta y entrar</button>
+      <p id="gate-register-msg" class="form-message"></p>
+    </form>
+  </div>
+
+  <a href="inicio.html" class="gate-skip">Entrar sin cuenta →</a>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/gate.js"></script>
+</body>
+</html>
